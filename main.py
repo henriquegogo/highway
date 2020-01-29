@@ -1,8 +1,5 @@
-# Highway
-Micro framework to handle routes and requests in python
+#!/usr/bin/python3
 
-## How to use
-```python
 from highway import run
 
 def home(env):
@@ -15,7 +12,3 @@ run({
     '/': home,
     'GET /about': about
 })
-```
-
-## License
-MIT
