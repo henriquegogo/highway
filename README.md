@@ -18,7 +18,7 @@ run({
 })
 ```
 ```javascript
-# JavaScript
+// JavaScript
 const { run } = require("./highway.js")
 
 function home(req) {
