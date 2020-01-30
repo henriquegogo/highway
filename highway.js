@@ -3,12 +3,14 @@ const http = require('http')
 function run(routes={}, port=8000) {
   function manager(req, res) {
     const path = req.url, method = req.method
-    let body = ""
+    let code = 200, body = ""
 
     if (Object.keys(routes).includes(path)) body = routes[path](req)
     else if (Object.keys(routes).includes(method+" "+path)) body = routes[method+" "+path](req)
+    else code = 404
 
     if (typeof body == "object") body = JSON.stringify(body)
+    res.statusCode = code
     res.end(body)
   }
 
