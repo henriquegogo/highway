@@ -3,35 +3,21 @@ Micro framework to handle routes and requests
 
 ## How to use
 ```python
-# Python
-from highway import run
+import highway
 
-def home(env):
-    return { 'page': 'Home' }
+def home(req):
+    return { "pages": ["/", "/user"] }
 
-def about(env):
-    return 'About page'
+def user(req):
+    return { "name": "henriquegogo" }
 
-run({
-    '/': home,
-    'GET /about': about
-})
-```
-```javascript
-// JavaScript
-const { run } = require("./highway.js")
+def create_user(req):
+    return { "name": req["data"]["name"], "status": "created" }
 
-function home(req) {
-  return { 'page': 'Home' }
-}
-
-function about(req) {
-  return 'About page'
-}
-
-run({
-  '/': home,
-  'GET /about': about
+highway.run({
+    "GET /": home,
+    "GET /user": user,
+    "POST /user": create_user
 })
 ```
 

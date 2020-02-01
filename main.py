@@ -1,14 +1,18 @@
 #!/usr/bin/env python3
 
-from highway import run
+import highway
 
-def home(env):
-    return { 'page': 'Home' }
+def home(req):
+    return { "pages": ["/", "/user"] }
 
-def about(env):
-    return 'About page'
+def user(req):
+    return { "name": "henriquegogo" }
 
-run({
-    '/': home,
-    'GET /about': about
+def create_user(req):
+    return { "name": req["data"]["name"], "status": "created" }
+
+highway.run({
+    "GET /": home,
+    "GET /user": user,
+    "POST /user": create_user
 })
