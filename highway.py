@@ -7,9 +7,9 @@ def run(routes={}, port=8000):
         path, method, code, body = env["PATH_INFO"], env["REQUEST_METHOD"], "404 Not Found", ""
         route, params = path.split("/")[1], path.split("/")[2:]
         if method + " /" + route in routes:
-            request = type("Request", (object,), {
+            request = type("", (object,), {
                 "params": params,
-                "query_string": dict(parse_qsl(env["QUERY_STRING"])),
+                "query_string": type("", (object,), dict(parse_qsl(env["QUERY_STRING"])))(),
                 "data": json.loads(env["wsgi.input"].read(int(env["CONTENT_LENGTH"])).decode()) if env["CONTENT_LENGTH"] else {}
             })()
             code, body = "200 OK", json.dumps(routes[method + " /" + route](request))
