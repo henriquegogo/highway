@@ -7,6 +7,7 @@ def route_function(request):
     # request.params -> Everything after router. /route/[firstname/secondname]
     # request.query_srtring -> The query string. /route?firsname=foo&secondname=bar
     # request.data -> POST data
+    return { "Return type": "Any python dict will be converted to json" }
 
 run({
     "METHOD /route": route_function
