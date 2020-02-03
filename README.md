@@ -22,7 +22,7 @@ def home(req):
     return { "pages": ["/", "/user"] }
 
 def user(req):
-    return { "name": req.params[0] if len(req.params) > 0 else "" }
+    return { "name": req.params[0] if len(req.params) > 0 else "", "age": req.query_string.age if hasattr(req.query_string, "age") else "" }
 
 def create_user(req):
     return { "name": req.data["name"], "status": "created" }
