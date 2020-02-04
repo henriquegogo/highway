@@ -14,6 +14,9 @@ run({
 })
 ```
 
+## Static folder
+./public
+
 ## Example
 ```python
 import highway
