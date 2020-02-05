@@ -8,12 +8,9 @@ def run(routes={}, port=8000):
         route, params, static = path.split("/")[1], path.split("/")[2:], "public/index.html" if path == "/" else "public" + path
 
         if method + " /" + route in routes:
-            request = type("", (object,), {
-                "params": params,
-                "query_string": type("", (object,), dict(parse_qsl(env["QUERY_STRING"])))(),
-                "data": json.loads(env["wsgi.input"].read(int(env["CONTENT_LENGTH"])).decode()) if env["CONTENT_LENGTH"] else {}
-            })()
-            code, body = "200 OK", json.dumps(routes[method + " /" + route](request))
+            post_data = [json.loads(env["wsgi.input"].read(int(env["CONTENT_LENGTH"])).decode())] if env["CONTENT_LENGTH"] else []
+            query_string = [dict(parse_qsl(env["QUERY_STRING"]))] if env["QUERY_STRING"] else []
+            code, body = "200 OK", json.dumps(routes[method + " /" + route](*params, *post_data, *query_string))
         elif os.path.exists(static):
             response("200 OK", [("Content-type", mimetypes.guess_type(static)[0])])
             return util.FileWrapper(open(static, "rb"))

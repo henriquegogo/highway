@@ -3,10 +3,7 @@ Micro framework to handle routes and requests
 
 ## How to use
 ```python
-def route_function(request):
-    # request.params -> Everything after router. /route/[firstname/secondname]
-    # request.query_srtring -> The query string. /route?firsname=foo&secondname=bar
-    # request.data -> POST data
+def route_function(*params, post_data, query_string):
     return { "return": "Any python dict will be converted to json" }
 
 run({
@@ -21,14 +18,14 @@ run({
 ```python
 import highway
 
-def home(req):
+def home():
     return { "pages": ["/", "/user"] }
 
-def user(req):
-    return { "name": req.params[0] if len(req.params) > 0 else "", "age": req.query_string.age if hasattr(req.query_string, "age") else "" }
+def user(name="", query_string={}):
+    return { "name": name, "age": query_string.get("age", "") }
 
-def create_user(req):
-    return { "name": req.data["name"], "status": "created" }
+def create_user(data):
+    return { "name": data.get("name"), "status": "created" }
 
 highway.run({
     "GET /": home,
